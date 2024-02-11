@@ -1,11 +1,13 @@
 from django.http import HttpResponse
-from .models import Student, Grade
-from .serializers import StudentSerializer
+from .models import Student, Grade,Subject
+from .serializers import StudentSerializer,GradeSerializer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework import generics
 
+from django.shortcuts import render
+from .forms import GradeForm
 
 class StudentView(APIView):
     def get(self, request):
@@ -31,3 +33,16 @@ def Student_detail(request, pk):
 def index(request):
     return HttpResponse('Hello!!')
 
+
+
+
+def create_grade(request):
+    if request.method == 'POST':
+        form = GradeForm(request.POST)
+        if form.is_valid():
+            form.save()
+            # Redirect or perform other actions
+    else:
+        form = GradeForm()
+    
+    return render(request, 'create_grade.html', {'form': form})

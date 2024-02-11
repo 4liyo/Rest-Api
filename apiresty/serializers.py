@@ -19,6 +19,8 @@ class SubjectSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class GradeSerializer(serializers.ModelSerializer):
+    student = serializers.StringRelatedField()
+    subject = serializers.StringRelatedField()
     class Meta:
         model = Grade
         fields = '__all__'
